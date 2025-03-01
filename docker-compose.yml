@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+  pglsql:
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: "shop"
+      POSTGRES_USER: "shop"
+      POSTGRES_PASSWORD: "admin"
+    volumes:
+      - database:/var/lib/postgresql/data:rw
+volumes:
+  database:
