@@ -1,9 +1,0 @@
-CREATE TABLE IF NOT EXISTS product (
-     id SERIAL PRIMARY KEY,
-     name VARCHAR(255) NOT NULL,
-     anons VARCHAR(1024) DEFAULT NULL,
-     text TEXT NOT NULL,
-     price FLOAT DEFAULT 0,
-     sale FLOAT DEFAULT 0,
-     active SMALLINT DEFAULT 1
-)
