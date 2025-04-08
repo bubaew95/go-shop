@@ -3,12 +3,12 @@ package main
 import (
 	"fmt"
 	"github.com/bubaew95/go_shop/conf"
-	"github.com/bubaew95/go_shop/internal/adapter/conroller"
-	"github.com/bubaew95/go_shop/internal/adapter/logger"
-	"github.com/bubaew95/go_shop/internal/adapter/server"
-	"github.com/bubaew95/go_shop/internal/core/service"
-	"github.com/bubaew95/go_shop/internal/infra/repository"
-	"github.com/bubaew95/go_shop/internal/infra/repository/postgresql"
+	"github.com/bubaew95/go_shop/internal/application/product/http"
+	"github.com/bubaew95/go_shop/internal/application/product/infra/postgresql"
+	"github.com/bubaew95/go_shop/internal/application/product/service"
+	"github.com/bubaew95/go_shop/internal/infra/logger"
+	"github.com/bubaew95/go_shop/internal/infra/server"
+	"github.com/bubaew95/go_shop/pkg/helpers"
 	"github.com/go-chi/chi/v5"
 	"log"
 	"os"
@@ -17,7 +17,7 @@ import (
 )
 
 func init() {
-	if err := conf.LoadEnvOptional("../../.env"); err != nil {
+	if err := conf.LoadEnvOptional(""); err != nil {
 		fmt.Println("Error loading .env file")
 	}
 }
@@ -28,17 +28,21 @@ func main() {
 		log.Fatalf("load config failed: %v", err)
 	}
 
-	database, err := repository.NewDB(config.Database)
+	database, err := helpers.NewDB(config.Database)
 	if err != nil {
 		log.Fatalf("init db failed: %v", err)
 	}
 
-	route := chi.NewRouter()
-
 	productRepo := postgresql.NewProductRepository(database)
 	productService := service.NewProductService(productRepo)
-	productHandler := conroller.NewProductController(route, productService)
-	productHandler.InitRoute()
+	productHandler := http.NewProductController(productService)
+
+	route := chi.NewRouter()
+
+	route.Route("/products", func(r chi.Router) {
+		r.Post("/", productHandler.CreateProduct)
+		r.Get("/", productHandler.GetProducts)
+	})
 
 	apiRoute := chi.NewRouter()
 	apiRoute.Mount("/api", route)

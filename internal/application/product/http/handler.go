@@ -1,11 +1,12 @@
-package conroller
+package http
 
 import (
 	"encoding/json"
-	"github.com/bubaew95/go_shop/internal/adapter/logger"
-	entity "github.com/bubaew95/go_shop/internal/core/entity/repository"
-	"github.com/bubaew95/go_shop/internal/core/entity/response"
-	ports "github.com/bubaew95/go_shop/internal/core/ports/repository/postgresql"
+	ports "github.com/bubaew95/go_shop/internal/application/product/domain"
+	"github.com/bubaew95/go_shop/internal/application/product/entity"
+	"github.com/bubaew95/go_shop/internal/infra/logger"
+	"github.com/bubaew95/go_shop/pkg/helpers"
+	"github.com/bubaew95/go_shop/pkg/model/response"
 	"github.com/go-chi/chi/v5"
 	"go.uber.org/zap"
 	"net/http"
@@ -16,18 +17,10 @@ type Product struct {
 	service ports.ProductService
 }
 
-func NewProductController(r *chi.Mux, s ports.ProductService) *Product {
+func NewProductController(s ports.ProductService) *Product {
 	return &Product{
-		router:  r,
 		service: s,
 	}
-}
-
-func (p Product) InitRoute() {
-	p.router.Route("/products", func(r chi.Router) {
-		r.Post("/", p.CreateProduct)
-		r.Get("/", p.GetProducts)
-	})
 }
 
 func (p Product) CreateProduct(w http.ResponseWriter, r *http.Request) {
@@ -46,11 +39,11 @@ func (p Product) CreateProduct(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	WriteJson(w, res, http.StatusCreated)
+	helpers.WriteJson(w, res, http.StatusCreated)
 }
 
 func (p Product) GetProducts(w http.ResponseWriter, r *http.Request) {
-	offset, limit := ParsePaginate(r)
+	offset, limit := helpers.ParsePaginate(r)
 
 	products, err := p.service.GetProducts(r.Context(), offset, limit)
 	if err != nil {
@@ -64,5 +57,5 @@ func (p Product) GetProducts(w http.ResponseWriter, r *http.Request) {
 		Limit:  limit,
 	}
 
-	WriteJson(w, responseDTO, http.StatusOK)
+	helpers.WriteJson(w, responseDTO, http.StatusOK)
 }

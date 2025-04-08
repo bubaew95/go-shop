@@ -1,6 +1,6 @@
 module github.com/bubaew95/go_shop
 
-go 1.24.0
+go 1.22.12
 
 require (
 	github.com/go-chi/chi/v5 v5.2.1 // indirect
@@ -9,6 +9,7 @@ require (
 	github.com/jackc/pgx/v5 v5.7.2 // indirect
 	github.com/jackc/puddle/v2 v2.2.2 // indirect
 	github.com/joho/godotenv v1.5.1 // indirect
+	github.com/stretchr/testify v1.10.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.27.0 // indirect
 	golang.org/x/crypto v0.31.0 // indirect

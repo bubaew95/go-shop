@@ -1,8 +1,8 @@
-package conroller
+package helpers
 
 import (
 	"encoding/json"
-	"github.com/bubaew95/go_shop/internal/adapter/logger"
+	"github.com/bubaew95/go_shop/internal/infra/logger"
 	"go.uber.org/zap"
 	"net/http"
 	"strconv"

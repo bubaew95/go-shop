@@ -2,8 +2,8 @@ package service
 
 import (
 	"context"
-	entity "github.com/bubaew95/go_shop/internal/core/entity/repository"
-	ports "github.com/bubaew95/go_shop/internal/core/ports/repository/postgresql"
+	ports "github.com/bubaew95/go_shop/internal/application/product/domain"
+	"github.com/bubaew95/go_shop/internal/application/product/entity"
 )
 
 type ProductService struct {

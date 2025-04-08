@@ -1,4 +1,5 @@
-CREATE TABLE IF NOT EXISTS users (
+-- +goose Up
+CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     first_name VARCHAR(100) NOT NULL,
     middle_name VARCHAR(100) NOT NULL,
@@ -6,6 +7,9 @@ CREATE TABLE IF NOT EXISTS users (
     email VARCHAR(255) NOT NULL,
     phone INTEGER NOT NULL,
     role VARCHAR(20) ARRAY DEFAULT NULL,
-    created_at TIMESTAMP DEFAULT NOW(),
-    updated_at TIMESTAMP DEFAULT NOW()
-)
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- +goose Down
+DROP TABLE IF EXISTS users;

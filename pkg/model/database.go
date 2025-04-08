@@ -1,4 +1,4 @@
-package ports
+package model
 
 import (
 	"database/sql"

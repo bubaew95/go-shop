@@ -21,7 +21,7 @@ type DatabaseConfig struct {
 }
 
 func NewServerConfig() *ServerConfig {
-	port := flag.Uint("port", 8080, "http server port")
+	port := flag.Uint("port", 8081, "http server port")
 	flag.Parse()
 
 	debug, err := strconv.ParseBool(os.Getenv("DEBUG"))

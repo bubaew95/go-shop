@@ -1,8 +1,8 @@
-package ports
+package domain
 
 import (
 	"context"
-	entity "github.com/bubaew95/go_shop/internal/core/entity/repository"
+	"github.com/bubaew95/go_shop/internal/application/product/entity"
 )
 
 type ProductRepository interface {
