@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+
 	ports "github.com/bubaew95/go_shop/internal/application/product/domain"
 	"github.com/bubaew95/go_shop/internal/application/product/entity"
 )
@@ -24,7 +25,7 @@ func (p ProductService) CreateProduct(ctx context.Context, product entity.Produc
 	return product, nil
 }
 
-func (p ProductService) GetProducts(ctx context.Context, offset int, limit int) ([]entity.Product, error) {
+func (p ProductService) GetProducts(ctx context.Context, offset int, limit int) ([]entity.ProductResponse, error) {
 	products, err := p.repo.GetProducts(ctx, offset, limit)
 	if err != nil {
 		return nil, err

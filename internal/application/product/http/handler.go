@@ -2,14 +2,16 @@ package http
 
 import (
 	"encoding/json"
+	"net/http"
+
+	"github.com/go-chi/chi/v5"
+	"go.uber.org/zap"
+
 	ports "github.com/bubaew95/go_shop/internal/application/product/domain"
 	"github.com/bubaew95/go_shop/internal/application/product/entity"
 	"github.com/bubaew95/go_shop/internal/infra/logger"
 	"github.com/bubaew95/go_shop/pkg/helpers"
 	"github.com/bubaew95/go_shop/pkg/model/response"
-	"github.com/go-chi/chi/v5"
-	"go.uber.org/zap"
-	"net/http"
 )
 
 type Product struct {
@@ -29,6 +31,12 @@ func (p Product) CreateProduct(w http.ResponseWriter, r *http.Request) {
 	if err := json.NewDecoder(r.Body).Decode(&product); err != nil {
 		logger.Log.Debug("Error decoding product", zap.Error(err))
 		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	errs, ok := product.Validate()
+	if !ok {
+		helpers.WriteJson(w, errs, http.StatusBadRequest)
 		return
 	}
 

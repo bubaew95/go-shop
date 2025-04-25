@@ -2,10 +2,12 @@ package helpers
 
 import (
 	"encoding/json"
-	"github.com/bubaew95/go_shop/internal/infra/logger"
-	"go.uber.org/zap"
 	"net/http"
 	"strconv"
+
+	"go.uber.org/zap"
+
+	"github.com/bubaew95/go_shop/internal/infra/logger"
 )
 
 func WriteJson(w http.ResponseWriter, data interface{}, code int) {

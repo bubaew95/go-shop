@@ -1,18 +1,23 @@
 -- +goose Up
 CREATE TABLE product (
     id SERIAL PRIMARY KEY,
-    category_id INTEGER DEFAULT NULL,
+    firm_id INTEGER DEFAULT null,
+    user_id INTEGER DEFAULT null,
     name VARCHAR(255) NOT NULL,
+    anons VARCHAR(512) DEFAULT NULL,
+    text TEXT DEFAULT NULL,
     stock INTEGER DEFAULT NULL,
     price DOUBLE PRECISION DEFAULT 0,
-    image VARCHAR(255) DEFAULT NULL,
+    discount SMALLINT DEFAULT NULL,
+
+    seo_title VARCHAR(255) DEFAULT null,
+    seo_description VARCHAR(512) DEFAULT null,
+    seo_keywords VARCHAR(255) DEFAULT NULL,
+
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
-ALTER TABLE product ADD CONSTRAINT FK_PRODUCT_CATEGORY_ID FOREIGN KEY (category_id) REFERENCES category (id)  ON DELETE SET NULL;
-
 -- +goose Down
-ALTER TABLE product DROP CONSTRAINT FK_PRODUCT_CATEGORY_ID;
 DROP TABLE IF EXISTS product;
 

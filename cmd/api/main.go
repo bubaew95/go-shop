@@ -2,6 +2,13 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"os"
+	"os/signal"
+	"syscall"
+
+	"github.com/go-chi/chi/v5"
+
 	"github.com/bubaew95/go_shop/conf"
 	"github.com/bubaew95/go_shop/internal/application/product/http"
 	"github.com/bubaew95/go_shop/internal/application/product/infra/postgresql"
@@ -9,11 +16,6 @@ import (
 	"github.com/bubaew95/go_shop/internal/infra/logger"
 	"github.com/bubaew95/go_shop/internal/infra/server"
 	"github.com/bubaew95/go_shop/pkg/helpers"
-	"github.com/go-chi/chi/v5"
-	"log"
-	"os"
-	"os/signal"
-	"syscall"
 )
 
 func init() {

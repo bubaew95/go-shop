@@ -2,8 +2,9 @@ package helpers
 
 import (
 	"database/sql"
-	"github.com/bubaew95/go_shop/conf"
 	"time"
+
+	"github.com/bubaew95/go_shop/conf"
 )
 
 type DataBase struct {

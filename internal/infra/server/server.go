@@ -4,11 +4,13 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/bubaew95/go_shop/conf"
-	"github.com/go-chi/chi/v5"
 	"log"
 	"net/http"
 	"time"
+
+	"github.com/go-chi/chi/v5"
+
+	"github.com/bubaew95/go_shop/conf"
 )
 
 const defaultHost = "0.0.0.0"

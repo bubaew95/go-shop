@@ -1,8 +1,9 @@
 package logger
 
 import (
-	"github.com/bubaew95/go_shop/conf"
 	"go.uber.org/zap"
+
+	"github.com/bubaew95/go_shop/conf"
 )
 
 var Log *zap.Logger = zap.NewNop()
