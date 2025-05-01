@@ -2,19 +2,21 @@ package http
 
 import (
 	"encoding/json"
-	"github.com/bubaew95/go_shop/internal/application/category/entity"
-	"github.com/bubaew95/go_shop/internal/application/category/infra/postgresql/mock"
-	categoryS "github.com/bubaew95/go_shop/internal/application/category/service"
-	"github.com/bubaew95/go_shop/pkg/model/response"
-	"github.com/go-chi/chi/v5"
-	"github.com/golang/mock/gomock"
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 	"io"
 	"net/http"
 	"net/http/httptest"
 	"strconv"
 	"testing"
+
+	"github.com/go-chi/chi/v5"
+	"github.com/golang/mock/gomock"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
+
+	"github.com/bubaew95/go_shop/internal/application/category/entity"
+	"github.com/bubaew95/go_shop/internal/application/category/infra/postgresql/mock"
+	categoryS "github.com/bubaew95/go_shop/internal/application/category/service"
+	"github.com/bubaew95/go_shop/pkg/model/response"
 )
 
 func initMockCategoryServer(t *testing.T) (*mock.MockCategoryRepository, *httptest.Server) {

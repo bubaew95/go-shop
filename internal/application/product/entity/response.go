@@ -26,6 +26,6 @@ type ProductResponse struct {
 	SeoDescription string     `json:"seo_description,omitempty"`
 	SeoKeywords    string     `json:"seo_keywords,omitempty"`
 	CreatedAt      time.Time  `json:"created_at,omitempty"`
-	Category       []Category `json:"category,omitempty"`
-	Images         *[]Images  `json:"images,omitempty"`
+	Category       []Category `json:"category"`
+	Images         []Images   `json:"images"`
 }

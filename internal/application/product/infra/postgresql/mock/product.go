@@ -8,8 +8,9 @@ import (
 	context "context"
 	reflect "reflect"
 
-	entity "github.com/bubaew95/go_shop/internal/application/product/entity"
 	gomock "github.com/golang/mock/gomock"
+
+	entity "github.com/bubaew95/go_shop/internal/application/product/entity"
 )
 
 // MockProductRepository is a mock of ProductRepository interface.

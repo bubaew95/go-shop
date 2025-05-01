@@ -8,8 +8,9 @@ import (
 	context "context"
 	reflect "reflect"
 
-	entity "github.com/bubaew95/go_shop/internal/application/category/entity"
 	gomock "github.com/golang/mock/gomock"
+
+	entity "github.com/bubaew95/go_shop/internal/application/category/entity"
 )
 
 // MockCategoryRepository is a mock of CategoryRepository interface.

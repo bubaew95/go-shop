@@ -2,12 +2,14 @@ package postgresql
 
 import (
 	"context"
-	"github.com/bubaew95/go_shop/conf"
-	"github.com/bubaew95/go_shop/pkg/helpers"
+	"testing"
+
 	_ "github.com/jackc/pgx/v5/stdlib"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
+
+	"github.com/bubaew95/go_shop/conf"
+	"github.com/bubaew95/go_shop/pkg/helpers"
 )
 
 func TestCategoryRepository_GetCategories(t *testing.T) {

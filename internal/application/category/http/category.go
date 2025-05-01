@@ -1,11 +1,13 @@
 package http
 
 import (
+	"net/http"
+
+	"go.uber.org/zap"
+
 	"github.com/bubaew95/go_shop/internal/infra/logger"
 	"github.com/bubaew95/go_shop/pkg/helpers"
 	"github.com/bubaew95/go_shop/pkg/model/response"
-	"go.uber.org/zap"
-	"net/http"
 
 	"github.com/bubaew95/go_shop/internal/application/category/domain"
 )
