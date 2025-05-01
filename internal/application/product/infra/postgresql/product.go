@@ -3,7 +3,7 @@ package postgresql
 import (
 	"context"
 	"encoding/json"
-
+	"fmt"
 	_ "github.com/jackc/pgx/v5/stdlib"
 	"go.uber.org/zap"
 
@@ -85,7 +85,7 @@ func (p ProductRepository) GetProducts(ctx context.Context, offset int, limit in
 	}
 	defer rows.Close()
 
-	var products []entity.ProductResponse
+	products := make([]entity.ProductResponse, 0)
 	for rows.Next() {
 		var product entity.ProductResponse
 		err := rows.Scan(&product.ID, &product.Name, &product.Price, &product.FirmID)
@@ -94,10 +94,11 @@ func (p ProductRepository) GetProducts(ctx context.Context, offset int, limit in
 		}
 
 		categories, err := p.GetCategoriesByProductID(ctx, product.ID)
-		if err == nil {
+		if err != nil {
 			return nil, err
 		}
 
+		product.Images = []entity.Images{}
 		product.Category = categories
 
 		products = append(products, product)
@@ -110,20 +111,20 @@ func (p ProductRepository) GetProducts(ctx context.Context, offset int, limit in
 	return products, nil
 }
 
-func (p ProductRepository) GetCategoriesByProductID(ctx context.Context, producID int) ([]entity.Category, error) {
+func (p ProductRepository) GetCategoriesByProductID(ctx context.Context, productID int) ([]entity.Category, error) {
 	sqlQuery := `
 		SELECT c.id, c.name FROM category c
 		LEFT JOIN categories_to_product ctp ON c.id = ctp.category_id
 		WHERE ctp.product_id = $1
 	`
 
-	rows, err := p.db.QueryContext(ctx, sqlQuery, producID)
+	rows, err := p.db.QueryContext(ctx, sqlQuery, productID)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
 
-	var categories []entity.Category
+	categories := make([]entity.Category, 0)
 	for rows.Next() {
 		var category entity.Category
 		if err := rows.Scan(&category.ID, &category.Name); err != nil {
@@ -131,6 +132,11 @@ func (p ProductRepository) GetCategoriesByProductID(ctx context.Context, producI
 		}
 
 		categories = append(categories, category)
+	}
+
+	if err := rows.Err(); err != nil {
+		fmt.Println(categories)
+		return nil, err
 	}
 
 	return categories, nil
