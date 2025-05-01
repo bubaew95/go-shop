@@ -3,18 +3,20 @@ package http
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/bubaew95/go_shop/internal/application/product/entity"
-	"github.com/bubaew95/go_shop/internal/application/product/infra/postgresql/mock"
-	"github.com/bubaew95/go_shop/internal/application/product/service"
-	"github.com/go-chi/chi/v5"
-	"github.com/golang/mock/gomock"
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 	"io"
 	"net/http"
 	"net/http/httptest"
 	"strings"
 	"testing"
+
+	"github.com/go-chi/chi/v5"
+	"github.com/golang/mock/gomock"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
+
+	"github.com/bubaew95/go_shop/internal/application/product/entity"
+	"github.com/bubaew95/go_shop/internal/application/product/infra/postgresql/mock"
+	"github.com/bubaew95/go_shop/internal/application/product/service"
 )
 
 func TestCreateProduct(t *testing.T) {

@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/go-chi/chi/v5"
 	"go.uber.org/zap"
 
 	ports "github.com/bubaew95/go_shop/internal/application/product/domain"
@@ -14,18 +13,17 @@ import (
 	"github.com/bubaew95/go_shop/pkg/model/response"
 )
 
-type Product struct {
-	router  *chi.Mux
+type ProductHandler struct {
 	service ports.ProductService
 }
 
-func NewProductController(s ports.ProductService) *Product {
-	return &Product{
+func NewProductController(s ports.ProductService) *ProductHandler {
+	return &ProductHandler{
 		service: s,
 	}
 }
 
-func (p Product) CreateProduct(w http.ResponseWriter, r *http.Request) {
+func (p ProductHandler) CreateProduct(w http.ResponseWriter, r *http.Request) {
 	var product entity.Product
 
 	if err := json.NewDecoder(r.Body).Decode(&product); err != nil {
@@ -50,7 +48,7 @@ func (p Product) CreateProduct(w http.ResponseWriter, r *http.Request) {
 	helpers.WriteJson(w, res, http.StatusCreated)
 }
 
-func (p Product) GetProducts(w http.ResponseWriter, r *http.Request) {
+func (p ProductHandler) GetProducts(w http.ResponseWriter, r *http.Request) {
 	offset, limit := helpers.ParsePaginate(r)
 
 	products, err := p.service.GetProducts(r.Context(), offset, limit)

@@ -1,8 +1,13 @@
 package fixtures
 
 import (
-	"github.com/bubaew95/go_shop/internal/application/category/entity"
+	"context"
+	"fmt"
 	"time"
+
+	"github.com/bubaew95/go_shop/internal/application/category/entity"
+	"github.com/bubaew95/go_shop/internal/application/category/infra/postgresql"
+	"github.com/bubaew95/go_shop/pkg/helpers"
 
 	"github.com/brianvoe/gofakeit/v6"
 )
@@ -20,10 +25,15 @@ func FakeCategory() entity.Category {
 	}
 }
 
-func GenerateCategory(n int) []entity.Category {
-	var list []entity.Category
+func GenerateCategory(n int, db *helpers.DataBase) {
+	repo := postgresql.NewCategoryRepository(db)
+
 	for i := 0; i < n; i++ {
-		list = append(list, FakeCategory())
+		category := FakeCategory()
+
+		_, err := repo.Create(context.Background(), category)
+		if err != nil {
+			fmt.Println(err)
+		}
 	}
-	return list
 }

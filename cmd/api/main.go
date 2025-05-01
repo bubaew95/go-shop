@@ -7,11 +7,15 @@ import (
 	"os/signal"
 	"syscall"
 
+	categoryH "github.com/bubaew95/go_shop/internal/application/category/http"
+	categoryR "github.com/bubaew95/go_shop/internal/application/category/infra/postgresql"
+	categoryS "github.com/bubaew95/go_shop/internal/application/category/service"
+
 	"github.com/go-chi/chi/v5"
 
 	"github.com/bubaew95/go_shop/conf"
-	"github.com/bubaew95/go_shop/internal/application/product/http"
-	"github.com/bubaew95/go_shop/internal/application/product/infra/postgresql"
+	productH "github.com/bubaew95/go_shop/internal/application/product/http"
+	productR "github.com/bubaew95/go_shop/internal/application/product/infra/postgresql"
 	"github.com/bubaew95/go_shop/internal/application/product/service"
 	"github.com/bubaew95/go_shop/internal/infra/logger"
 	"github.com/bubaew95/go_shop/internal/infra/server"
@@ -35,15 +39,21 @@ func main() {
 		log.Fatalf("init db failed: %v", err)
 	}
 
-	productRepo := postgresql.NewProductRepository(database)
+	productRepo := productR.NewProductRepository(database)
 	productService := service.NewProductService(productRepo)
-	productHandler := http.NewProductController(productService)
+	productHandler := productH.NewProductController(productService)
+
+	categoryRepo := categoryR.NewCategoryRepository(database)
+	categoryService := categoryS.NewCategoryService(categoryRepo)
+	categoryHandler := categoryH.NewCategoryController(categoryService)
 
 	route := chi.NewRouter()
-
 	route.Route("/products", func(r chi.Router) {
 		r.Post("/", productHandler.CreateProduct)
 		r.Get("/", productHandler.GetProducts)
+	})
+	route.Route("/category", func(r chi.Router) {
+		r.Get("/", categoryHandler.GetCategories)
 	})
 
 	apiRoute := chi.NewRouter()

@@ -3,7 +3,9 @@ package fixtures
 import (
 	"context"
 	"fmt"
+
 	"github.com/brianvoe/gofakeit/v6"
+
 	"github.com/bubaew95/go_shop/internal/application/product/entity"
 	"github.com/bubaew95/go_shop/internal/application/product/infra/postgresql"
 	"github.com/bubaew95/go_shop/pkg/helpers"
